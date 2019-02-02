@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using System.Threading;
+using Common;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WebSocketSharp;
@@ -10,7 +12,7 @@ namespace WeatherDataReplay
 {
     class Program
     {
-        private static WebSocket _webSocket;
+        private static WebsocketConnection _webSocketConnection;
 
         static void Main(string[] args)
         {
@@ -33,52 +35,9 @@ Where ..
                             throw new Exception(
                                 $"The specified input file doesn't exist or is not accessible: {args[2]}");
 
-            _webSocket = new WebSocket(endpointUrl);
-
-            _webSocket.OnOpen += (s, e) =>
-            {
-                // Send init message
-                var initialRequest = new
-                {
-                    type = "connection_request",
-                    request_type = "connect_to_prop",
-                    prop_id = propertyId
-                };
-                var json = JsonConvert.SerializeObject(initialRequest);
-                _webSocket.Send(json);
-            };
-
-            _webSocket.OnMessage += (s, e) =>
-            {
-                // Wait for init reply
-                var message = (JObject) JsonConvert.DeserializeObject(e.Data);
-                Console.WriteLine($"Received WS message: \n{e.Data}");
-
-                var t = message["type"];
-                var tv = t.ToString();
-
-                var pn = message["value_name"];
-                var pnVv = pn.ToString();
-
-                if (tv == "property_update" &&
-                    pnVv == "prop_number")
-                {
-                    // Init reply arrived
-                    int.Parse(message["value"].Value<string>());
-                    Console.WriteLine($"PropertyId is: \n{propertyId}");
-                }
-            };
-
-            _webSocket.OnClose += (s, e) => { };
-            _webSocket.OnError += (s, e) =>
-            {
-                // Fuck up
-                Console.WriteLine($"Fuckup: {e.Message}, Ex: {e.Exception.Message + "\n" + e.Exception.StackTrace}");
-                throw e.Exception;
-            };
-
-            _webSocket.Connect();
-
+            
+            _webSocketConnection = new WebsocketConnection(propertyId, endpointUrl, false);
+            
             var oneSecond = TimeSpan.FromSeconds(1);
             var dateRegex = new Regex(@"\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d.*", RegexOptions.Compiled);
 
@@ -164,35 +123,31 @@ Where ..
 
                         // Timetamp
                         var changeMessage = new {type = "set_value", value_name = "userdefined_string_1", value = cells[0].Replace("\"", "")};
-                        _webSocket.Send(JsonConvert.SerializeObject(changeMessage));
+                        _webSocketConnection.Send(changeMessage);
 
                         changeMessage = new {type = "set_value", value_name = "wind_direction", value = cells[9]};
-                        _webSocket.Send(JsonConvert.SerializeObject(changeMessage));
+                        _webSocketConnection.Send(changeMessage);
 
                         changeMessage = new {type = "set_value", value_name = "wind_speed", value = cells[10]};
-                        _webSocket.Send(JsonConvert.SerializeObject(changeMessage));
+                        _webSocketConnection.Send(changeMessage);
 
-                        changeMessage = new
-                            {type = "set_value", value_name = "ambient_temperature", value = cells[12]};
-                        _webSocket.Send(JsonConvert.SerializeObject(changeMessage));
+                        changeMessage = new {type = "set_value", value_name = "ambient_temperature", value = cells[12]};
+                        _webSocketConnection.Send(changeMessage);
 
                         changeMessage = new {type = "set_value", value_name = "sun_state", value = light};
-                        _webSocket.Send(JsonConvert.SerializeObject(changeMessage));
+                        _webSocketConnection.Send(changeMessage);
 
-                        // Custom field: Rain
-                        changeMessage = new
-                            {type = "set_value", value_name = "userdefined_double_1", value = cells[15]};
-                        _webSocket.Send(JsonConvert.SerializeObject(changeMessage));
+                        // Custom field: Rain intensity
+                        changeMessage = new {type = "set_value", value_name = "userdefined_double_1", value = cells[16]};
+                        _webSocketConnection.Send(changeMessage);
 
                         // Custom field: Relative humidity
-                        changeMessage = new
-                            {type = "set_value", value_name = "userdefined_double_2", value = cells[13]};
-                        _webSocket.Send(JsonConvert.SerializeObject(changeMessage));
+                        changeMessage = new {type = "set_value", value_name = "userdefined_double_2", value = cells[13]};
+                        _webSocketConnection.Send(changeMessage);
 
                         // Custom field: Air pressure
-                        changeMessage = new
-                            {type = "set_value", value_name = "userdefined_double_3", value = cells[14]};
-                        _webSocket.Send(JsonConvert.SerializeObject(changeMessage));
+                        changeMessage = new {type = "set_value", value_name = "userdefined_double_3", value = cells[14]};
+                        _webSocketConnection.Send(changeMessage);
 
 
                         Thread.Sleep(oneSecond);

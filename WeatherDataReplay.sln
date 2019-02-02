@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherDataReplay", "WeatherDataReplay\WeatherDataReplay.csproj", "{AB764ED5-3782-489C-8AB1-C562416E13DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleSink", "ConsoleSink\ConsoleSink.csproj", "{C7D8E563-FDBE-4F19-A452-5A7115B35586}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{44086701-C27B-4161-AA0C-990A87BCE669}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{AB764ED5-3782-489C-8AB1-C562416E13DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB764ED5-3782-489C-8AB1-C562416E13DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB764ED5-3782-489C-8AB1-C562416E13DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7D8E563-FDBE-4F19-A452-5A7115B35586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7D8E563-FDBE-4F19-A452-5A7115B35586}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7D8E563-FDBE-4F19-A452-5A7115B35586}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7D8E563-FDBE-4F19-A452-5A7115B35586}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44086701-C27B-4161-AA0C-990A87BCE669}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44086701-C27B-4161-AA0C-990A87BCE669}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44086701-C27B-4161-AA0C-990A87BCE669}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44086701-C27B-4161-AA0C-990A87BCE669}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
