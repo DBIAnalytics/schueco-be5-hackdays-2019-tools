@@ -7,7 +7,7 @@ Replays the 'CR1000_Weather.dat.txt' dataset against the schueco api, acting as 
 Data Source: https://www.ed.ac.uk/geosciences/weather-station/weather-station-data
 
 ***Usage:***  
-WeatherDataReplay.exe 221 "ws://schuecobe5hackdays.azurewebsites.net/WebSocketServer.ashx?" "C:\path\to\file.csv"
+`WeatherDataReplay.exe 221 "ws://schuecobe5hackdays.azurewebsites.net/WebSocketServer.ashx?" "C:\path\to\file.csv"`
 
 Where ..  
 ..the first argument is the 'propertyId' (supply 0 for a new one)  
@@ -30,3 +30,17 @@ The following fields are used:
 * userdefined_double_3 -> The airpressure in pascal
 
 The application stops when the "Enter" key is pressed.
+
+## ConsoleSink.exe
+***Purpose:***  
+Prints messages from the websocket api in the following csv format:   
+`tick,sensor,value`   
+Can be used to pipe the data of a property to another command line utility.  
+
+***Usage:***  
+`ConsoleSink.exe 221 "ws://schuecobe5hackdays.azurewebsites.net/WebSocketServer.ashx?" "userdefined_string_1,wind_direction,wind_speed,sun_state,userdefined_double_1,userdefined_double_2,userdefined_double_3"`
+  
+Where ..  
+..the first argument is the 'propertyId' (supply 0 for a new one)  
+..the second argument is the 'endpointUrl'  
+..the third argument is a list of value_names that should be printed  
