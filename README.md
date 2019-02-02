@@ -9,13 +9,13 @@ Data Source: https://www.ed.ac.uk/geosciences/weather-station/weather-station-da
 ***Usage:***  
 WeatherDataReplay.exe 221 "ws://schuecobe5hackdays.azurewebsites.net/WebSocketServer.ashx?" "C:\path\to\file.csv"
 
-You can use the binaries in https://github.com/DBIAnalytics/schueco-be5-hackdays-2019-tools/tree/master/WeatherDataReplay/Binaries or compile the tool from source.  
-Build prerequisites are either MonoDevelop, Rider or Visual Studio.  
-
 Where ..  
 ..the first argument is the 'propertyId' (supply 0 for a new one)  
 ..the second argument is the 'endpointUrl'  
 ..the third argument is the 'inputFile  
+
+You can use the binaries in https://github.com/DBIAnalytics/schueco-be5-hackdays-2019-tools/tree/master/WeatherDataReplay/Binaries or compile the tool from source.  
+Build prerequisites are either MonoDevelop, Rider or Visual Studio.  
 
 ***Effects:***  
 The running application sends one row of the above mentioned file per second to the api.
